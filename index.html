@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html lang=“en”>
+<html lang="en">
 <head>
-  <meta charset=“UTF-8”>
-  <meta name=“viewport” content=“width=device-width, initial-scale=1.0”> *<!— displays site properly based on user’s device —>*
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> *<!-- displays site properly based on user's device -->*
 
-  <link rel=“icon” type=“image/png” sizes=“32x32” href=“./images/favicon-32x32.png”>
-  <link rel=“stylesheet” href=“reset.css”>
-  <link rel=“preconnect” href=“https://fonts.googleapis.com”>
-  <link rel=“preconnect” href=“https://fonts.gstatic.com” crossorigin>
-  <link href=“https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;700&display=swap” rel=“stylesheet”>
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;500;700&display=swap" rel="stylesheet">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+  integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+  crossorigin="anonymous"/>
   <title>Frontend Mentor | Launch countdown timer</title>
 
-  *<!— Feel free to remove these styles or customise in your own stylesheet 👍 —>*
+  *<!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->*
   <style>
     body{
       position: relative;
-      */* background-image: url(“./images/bg-stars.svg”), url(“./images/pattern-hills.svg”);*
-*background-position: center bottom, center bottom;*
-*background-repeat: repeat, no-repeat;*
-*background-size: contain; */*
-      */* contain : 배경을 사용하는 요소를 벗어나지 않는 최대 크기로 이미지를 확대 또는 축소합니다. 가로 세로 비율을 유지합니다. */*
+      /* background-image: url("./images/bg-stars.svg"), url("./images/pattern-hills.svg");
+      background-position: center bottom, center bottom;
+      background-repeat: repeat, no-repeat;
+      background-size: contain; */
+      /* contain : 배경을 사용하는 요소를 벗어나지 않는 최대 크기로 이미지를 확대 또는 축소합니다. 가로 세로 비율을 유지합니다. */
       background-color: hsl(234, 17%, 12%);
+      text-transform: uppercase;font-family: 'Red Hat Text', sans-serif;font-weight: 700;
     }
+    h1{text-transform: uppercase;font-family: 'Red Hat Text', sans-serif;font-weight: 700;color:hsl(0, 0%, 100%);font-size: 16px;letter-spacing:2px;text-align: center;}
     .wrap_cont{
       padding:130px 24px 72px 24px;
       min-height: 100vh;
@@ -29,9 +36,10 @@
       align-items: center;
       z-index: 1;
       box-sizing: border-box;
+      color: hsl(237, 18%, 59%)
     }
     .wrap_cont::after{
-      content: “”;
+      content: "";
       pointer-events: none;
       position: absolute;
       top: 0;
@@ -39,29 +47,121 @@
       width: 100%;
       height: 100%;
       background: no-repeat bottom center url(images/pattern-hills.svg), no-repeat url(images/bg-stars.svg);
-      background-size: 100% 25%;
+      background-size: 100% 25%, 100% 60%;
       z-index: -1;
       margin: 0;
       padding: 0;
     }
-    h1{text-transform: uppercase;font-family: ‘Red Hat Text’, sans-serif;font-weight: 700;color:hsl(0, 0%, 100%);font-size: 16px;letter-spacing:2px;text-align: center;}
+    .time_table{
+      display: flex;
+      justify-content: space-around;
+      margin-top: 45px;
+    }
+    .item_card{
+      height: 28vh;
+      width: 20%;
+      border:1px solid white;
+      color: hsl(345, 95%, 68%);
+    }
+    .upper_card{
+      background:#2c2c44;
+      height: 40%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+    .lower_card{
+      background:rgb(52 54 79);
+      height: 40%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+    .upper_card span, .lower_card span{
+      position: absolute;
+      top: 0;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      line-height: 1;
+      font-size: 6rem;
+    }
+    .upper_card span{
+      color: #d53c67;
+      top: 100%;
+    }
+    .lower_card span{
+      color: #ff5c89;
+    }
+    .item_card h2{
+      text-align: center;
+      line-height: 45px;
+      color: hsl(237, 18%, 59%);
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .social i{
+      color: hsl(237, 18%, 59%)
+    }
+    .social i:hover{
+      color: hsl(345, 95%, 68%)
+    }
     .attribution { font-size: 11px; text-align: center; position: absolute; bottom:0;text-align: center;}
     .attribution a { color: hsl(228, 45%, 44%); }
   </style>
 </head>
 <body>
-<main class=“wrap_cont”>
-  <h1>We’re launching soon</h1>
-
-  Days
-  Hours
-  Minutes
-  Seconds
-</main>
-  
-  <div class=“attribution”>
-    Challenge by <a href=“https://www.frontendmentor.io?ref=challenge” target=“_blank”>Frontend Mentor</a>. 
-    Coded by <a href=“#">minthing</a>.
+<main class="wrap_cont">
+  <h1>We're launching soon</h1>
+  <section class="time_table">
+    <div class="item_card">
+      <div class="upper_card">
+        <span class="day">08</span>
+      </div>
+      <div class="lower_card">
+        <span class="day">08</span>
+      </div>
+      <h2>Days</h2>
+    </div>
+    <div class="item_card">
+      <div class="upper_card">
+        <span class="hour">24</span>
+      </div>
+      <div class="lower_card">
+        <span class="hour">24</span>
+      </div>
+      <h2>Hours</h2>
+    </div>
+    <div class="item_card">
+      <div class="upper_card">
+        <span class="min">60</span>
+      </div>
+      <div class="lower_card">
+        <span class="min">60</span>
+      </div>
+      <h2>Miniutes</h2>
+    </div>
+    <div class="item_card">
+      <div class="upper_card">
+        <span class="sec">60</span>
+      </div>
+      <div class="lower_card">
+        <span class="sec">60</span>
+      </div>
+      <h2>Seconds</h2>
+    </div>
+  </section>
+  <div class="social">
+    <a href="#" aria-label="facebook">
+      <i class="fab fa-facebook-square"></i>
+    </a>
+    <a href="#" aria-label="pinterest">
+      <i class="fab fa-pinterest"></i>
+    </a>
+    <a href="#" aria-label="instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
   </div>
+</main>
 </body>
 </html>
