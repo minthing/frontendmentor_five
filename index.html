@@ -14,7 +14,7 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
   integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
   crossorigin="anonymous"/>
-  <title>Frontend Mentor | Launch countdown timer</title>
+  <title>Frontend Mentor | Launch seconddown timer</title>
 
   *<!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->*
   <style>
@@ -47,7 +47,7 @@
       width: 100%;
       height: 100%;
       background: no-repeat bottom center url(images/pattern-hills.svg), no-repeat url(images/bg-stars.svg);
-      background-size: 100% 25%, 100% 60%;
+      background-size: 100% 25%, 100% 70%;
       z-index: -1;
       margin: 0;
       padding: 0;
@@ -62,6 +62,9 @@
       height: 28vh;
       width: 14%;
       color: hsl(345, 95%, 68%);
+      max-height: 175px;
+      max-width: 165px;
+      perspective: 1000px;
     }
     .item_card:not(:last-child){
       margin-right:3%;
@@ -72,14 +75,31 @@
       position: relative;
       overflow: hidden;
       border-radius: 10px 10px 0 0;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+      transform-origin: bottom;
+      z-index: 101;
+      color: #d53c67;
     }
+
+    .upper_card.active{
+      animation: flip 0.9s cubic-bezier(0.75, 0, 0.23, 1) infinite;
+    }
+/* 
+    .lower_card.active{
+      animation: flip_under 1s cubic-bezier(0.75, 0, 0.23, 1) infinite;
+    } */
+
     .lower_card{
       background:rgb(52 54 79);
-      height: 40%;
+      height: 80%;
+      margin-top: -53%;
       position: relative;
-      overflow: hidden;
-      border-radius: 0 0 10px 10px;
+      border-radius: 10px 10px 10px 10px;
+      z-index: 100;
+      color: #ff5c89;
     }
+
     .upper_card span, .lower_card span{
       position: absolute;
       top: 0;
@@ -90,11 +110,11 @@
       font-size: 5rem;
     }
     .upper_card span{
-      color: #d53c67;
       top: 100%;
+      transform-style: preserve-3d;
     }
     .lower_card span{
-      color: #ff5c89;
+      top: 50%;
     }
     .item_card h2{
       text-align: center;
@@ -104,7 +124,10 @@
       font-size: 14px;
     }
     .social{
-      text-align: center;
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 0);
     }
     .social i{
       color: hsl(237, 18%, 59%);
@@ -119,19 +142,67 @@
     .attribution { font-size: 11px; text-align: center; position: absolute; bottom:0;text-align: center;}
     .attribution a { color: hsl(228, 45%, 44%); }
 
+    @keyframes flip {
+     0% { 
+       transform: rotateX(0);
+       z-index: 102;
+       opacity:1
+     }
+     70%{
+      transform: rotateX(-126deg);
+       z-index: 102;
+       opacity: 0.99;
+     }
+     94%{
+      transform: rotateX(-169deg);
+       z-index: 102;
+       opacity: 0.5;
+     }
+     95%{
+      transform: rotateX(-171deg);
+       z-index: 101;
+       opacity: 0.2;
+     }
+     100% { 
+      transform: rotateX(-180deg);
+      z-index: 99;
+      opacity: 0;
+     }
+    }
+
+    @keyframes flip_under {
+     0% { 
+      background:rgb(52 54 79);
+     }
+     60%{
+      background:rgb(52 54 79);
+     }
+     100% { 
+      background:#2c2c44;
+     }
+    }
+
     @media screen and (max-width: 850px) {
       .wrap_cont{
-        padding: 130px 5% 72px 5%;
+        padding: 150px 5% 72px 5%;
       }
       .item_card{
         height: 20vh;
         width: 25%;
+        max-height: 75px;
+        max-width: 100px;;
       }
       .item_card:not(:last-child){
         margin-right:2%;
       }
       .upper_card span, .lower_card span{
         font-size: 2.5rem;
+      }
+      .wrap_cont:after{
+        background-size: 165% 33%, 250% 51%;
+      }
+      .lower_card{
+        margin-top: -30%;
       }
     }
   </style>
@@ -189,5 +260,83 @@
     </a>
   </div>
 </main>
+<script>
+  console.log("hello");
+
+  const section = document.getElementsByTagName('section')[0];
+  let count = 0;
+
+  function changeTime(timeList, time, count){
+    if(count != 0){
+        timeList[0].parentNode.classList.add('active');
+      }
+    for(let i = 0; i < 2; i++){
+      timeList[i].innerHTML = time.toString().padStart(2, '0');
+    }
+  }
+
+  function removeClass(timeList){
+    timeList[0].parentNode.classList.remove('active');
+  }
+
+  function getDate(){
+    // 참고 : https://velog.io/@dev-hannahk/js-d-day
+  const setDate = new Date("2021-09-01T00:00:00+0900");
+  const setDateYear = setDate.getFullYear();
+  const setDateMonth = setDate.getMonth() + 1; // getMonth 메서드는 0부터 시작함
+  const setDateDay = setDate.getDate();
+  const now = new Date();
+
+  const distance = setDate.getTime() - now.getTime(); //second 단위로 변환 후 뺌
+
+  const seconds = Math.floor((distance % (1000*60))/1000);
+  const day = Math.floor(distance/(1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+
+  const dayList = document.querySelectorAll('.day');
+  const hourList = document.querySelectorAll('.hour');
+  const minList = document.querySelectorAll('.min');
+  const secList = document.querySelectorAll('.sec');
+
+  // const observer = new MutationObserver(function(mutations){}); -> 해당 함수 사용 불가능해 보임...
+
+  if(count == 0){
+    changeTime(secList, seconds, count);
+    changeTime(minList, minutes, count);
+    changeTime(hourList, hours, count);
+    changeTime(dayList, day, count);
+  }else{
+    changeTime(secList, seconds, count);
+    if(seconds == 0){
+      changeTime(minList, minutes, count);
+    }else{
+      removeClass(minList);
+      break;
+    }
+    if(minutes == 0){
+      changeTime(hourList, hours, count);
+    }else{
+      removeClass(hourList);
+      break;
+    }
+    if(hours == 0){
+      changeTime(dayList, day, count);
+    }else{
+      removeClass(dayList)
+      break;
+    }
+  }
+  count ++
+}
+
+  const init = () => {
+    getDate();
+    setInterval(getDate, 1000);
+  }
+
+  init();
+
+</script>
 </body>
 </html>
