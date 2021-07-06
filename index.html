@@ -80,10 +80,12 @@
       transform-origin: bottom;
       z-index: 101;
       color: #d53c67;
+      border-bottom: 1px solid hsl(234, 17%, 12%);
+      box-sizing: border-box;
     }
 
     .upper_card.active{
-      animation: flip 0.9s cubic-bezier(0.75, 0, 0.23, 1) infinite;
+      animation: flip 1s cubic-bezier(0.75, 0, 0.23, 1) infinite;
     }
 /* 
     .lower_card.active{
@@ -91,9 +93,10 @@
     } */
 
     .lower_card{
+      position: relative;
       background:rgb(52 54 79);
       height: 80%;
-      margin-top: -53%;
+      margin-top: -70px;
       position: relative;
       border-radius: 10px 10px 10px 10px;
       z-index: 100;
@@ -187,7 +190,7 @@
         padding: 150px 5% 72px 5%;
       }
       .item_card{
-        height: 20vh;
+        height: 175px;
         width: 25%;
         max-height: 75px;
         max-width: 100px;;
@@ -203,6 +206,21 @@
       }
       .lower_card{
         margin-top: -30%;
+      }
+    }
+    @media screen and (max-width:320px) {
+      .lower_card{
+        margin-top: -43px;
+      }
+    }
+    @media screen and (max-width:375px) {
+      .lower_card{
+        margin-top: -38px;
+      }
+    }
+    @media screen and (max-width:425px) {
+      .lower_card{
+        margin-top: -30px;
       }
     }
   </style>
@@ -301,30 +319,27 @@
 
   // const observer = new MutationObserver(function(mutations){}); -> 해당 함수 사용 불가능해 보임...
 
-  if(count == 0){
+  if(count <= 0){
     changeTime(secList, seconds, count);
     changeTime(minList, minutes, count);
     changeTime(hourList, hours, count);
     changeTime(dayList, day, count);
   }else{
     changeTime(secList, seconds, count);
-    if(seconds == 0){
+    if(seconds-1 == 0){
       changeTime(minList, minutes, count);
     }else{
       removeClass(minList);
-      break;
     }
-    if(minutes == 0){
+    if(minutes-1 == 0){
       changeTime(hourList, hours, count);
     }else{
       removeClass(hourList);
-      break;
     }
-    if(hours == 0){
+    if(hours-1 == 0){
       changeTime(dayList, day, count);
     }else{
       removeClass(dayList)
-      break;
     }
   }
   count ++
