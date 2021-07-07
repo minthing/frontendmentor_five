@@ -331,13 +331,14 @@
     }else{
       removeClass(minList);
     }
-    if(minutes-1 == 0){
+    if((minutes == 0) && (seconds-1 ==0)){
       changeTime(hourList, hours, count);
     }else{
       removeClass(hourList);
     }
-    if(hours-1 == 0){
+    if((hours == 0) && (minutes == 0) && (seconds-1 ==0)){
       changeTime(dayList, day, count);
+      console.log(dayCount);
     }else{
       removeClass(dayList)
     }
